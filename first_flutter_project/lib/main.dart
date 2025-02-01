@@ -32,6 +32,11 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random();
     notifyListeners();
   }
+
+  void removeFavorite(WordPair pair){
+    favorites.remove(pair);
+    notifyListeners();
+  }
   
   var favorites = <WordPair>[]; //mudar para {} para ver o que que muda
   
@@ -185,10 +190,18 @@ class FavoritesPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    final tema = Theme.of(context);
+    final estilo = tema.textTheme.displayMedium!.copyWith(
+      color: Colors.white,
+      fontSize: 20,
+    );
 
     if(appState.favorites.isEmpty){
       return Center(
-        child: Text('No favorites yet...'),
+        child: Text(
+          'No favorites yet...',
+          style: estilo,
+        ),
       );
     }
 
@@ -196,12 +209,23 @@ class FavoritesPage extends StatelessWidget{
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
-          child: Text('You have ${appState.favorites.length} favorites:'),
+          child: Text(
+            'You have ${appState.favorites.length} favorites:',
+            style: estilo.copyWith(fontSize: 25,),
+          ),
         ),
         for (var pair in appState.favorites)
           ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
+            leading: IconButton(
+              icon : Icon(Icons.delete_outline_outlined, color: Colors.redAccent,),
+              onPressed: (){
+                appState.removeFavorite(pair);
+            },
+            ),
+            title: Text(
+              pair.asLowerCase,
+              style: estilo,
+            ),
           ),
       ],
     );
