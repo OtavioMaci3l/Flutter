@@ -1,6 +1,6 @@
 # teste_interface_login
 
-teste criação de um layout de interface de login usando flutter
+teste criação de um layout de interface de login usando flutter, essa interface foi feita seguindo um tutorial no youtube para entender e ver mais sobre o flutter antes de aprofundar mais afundo nesse framework
 
 ## Getting Started
 
